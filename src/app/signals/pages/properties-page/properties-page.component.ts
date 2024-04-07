@@ -1,11 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../interfaces/user-request,interface';
 
 @Component({
   templateUrl: './properties-page.component.html',
   styleUrl: './properties-page.component.css'
 })
-export class PropertiesPageComponent {
+export class PropertiesPageComponent implements OnInit, OnDestroy {
+
+
+  public counter = signal(10);
 
   public user = signal<User>({
     id: 2,
@@ -14,6 +17,25 @@ export class PropertiesPageComponent {
     last_name: "Weaver",
     avatar: "https://reqres.in/img/faces/2-image.jpg"
   });
+
+  ngOnInit(): void {
+    //! Para demostrar que el effect tiene una limpieza automatica
+    /* setInterval( () => {
+      this.counter.update( current => current + 1);
+    },1000) */
+  }
+
+  ngOnDestroy(): void {
+    //this.userChangeEffect.destroy();
+  }
+
+  public userChangeEffect = effect( () => {
+    console.log(`${this.user().first_name} - ${this.counter()}`);
+  });
+
+  increaseBy( value: number ) {
+    this.counter.update( current => current + value);
+  }
 
   onFieldUpdate( field: keyof User, value: string ) {
     console.log(field,value);
@@ -44,11 +66,11 @@ export class PropertiesPageComponent {
         default:
           return current;
       }
-      return current;
+      return {...current};
     })
 
 
-  }
+  };
 
 
 
