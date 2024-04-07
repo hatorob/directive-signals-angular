@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, catchError, map, tap } from 'rxjs';
 import { SingleUserResponse, User } from '../interfaces/user-request,interface';
 
 @Injectable({
@@ -16,7 +16,10 @@ export class UserServicesService {
     return this.http.get<SingleUserResponse>(`${this.baseUrl}/${id}`)
               .pipe(
                 map( response => response.data ),
-                tap( console.log )
+                tap( console.log ),
+                catchError( (error) => {
+                  throw new Error('No se encontro el usuario')
+                })
               )
   }
 
