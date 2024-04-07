@@ -1,1 +1,30 @@
-<p>properties-page works!</p>
+<h1>Mutuaciones</h1>
+<hr>
+<div class="row">
+  <div class="col-6">
+    <label>email</label>
+    <input
+      #txtEmail
+      type="text"
+      class="form-control"
+      (input)="onFieldUpdate('email', txtEmail.value)">
+    <label>First name</label>
+    <input
+      #txtFirstName
+      type="text"
+      class="form-control"
+      (input)="onFieldUpdate('first_name', txtFirstName.value)">
+      <label>Last name</label>
+      <input
+      #txtLastName
+      type="text"
+      class="form-control"
+      (input)="onFieldUpdate('last_name', txtLastName.value)">
+  </div>
+  <div class="col-6">
+    <!-- Data del usuario -->
+    <pre>
+      {{ 'aa' | json }}
+    </pre>
+  </div>
+</div>
